@@ -86,8 +86,17 @@ def hello():
 def addSpaceship():
     print("==== POST at /spaceship")
     # print(request.headers)
+    requiredHeaders = ['name', 'model', 'location', 'status']
+    for header in requiredHeaders:
+        if not header in request.headers:
+            abort(400)
+
     name = request.headers['name']
-    s = Spaceship(name,'MyModel','Thislocation','Maintenance')
+    model = request.headers['model']
+    location = request.headers['location']
+    status = request.headers['status']
+
+    s = Spaceship(name,model, location, status)
 
     print(s.toJSON())
 
