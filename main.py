@@ -2,14 +2,20 @@ from flask import Flask, jsonify
 import json
 from json import JSONEncoder
 
-class SpaceshipEncoder(JSONEncoder):
+# ========================
+# =
+# =     JSON Encoder
+# =
+# ========================
+class Encoder(JSONEncoder):
     def default(self, o):
             return o.__dict__
 
-
-# key = id, value = Spaceship (object)
-ships = {}
-
+# ========================
+# =
+# =     Class: Spaceship
+# =
+# ========================
 class Spaceship:
     spaceshipCount = 0
 
@@ -21,10 +27,45 @@ class Spaceship:
         self.location = location
         self.status = status
 
+    def toJSON(self):
+        return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
+
+
+# ========================
+# =
+# =     Class: Location
+# =
+# ========================
+class Location:
+    locationCount = 0
+
+    def __init__(self, city, name, planet, capacity):
+        self.id = Location.locationCount
+        Location.locationCount += 1
+        self.city = city
+        self.name = name
+        self.planet = planet
+        self.capacity = capacity
 
     def toJSON(self):
         return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
 
+
+# ========================
+# =
+# =     Global variables
+# =
+# ========================
+
+# Dictionary for keeping track of all spaceships
+# key = id, value = Spaceship (object)
+ships = {}
+
+# Dictionary for keeping track of all locations
+# key = id, value = Location (object)
+locations = {}
+
+# Start flaskapp
 app = Flask(__name__)
 
 # ========================
@@ -116,6 +157,12 @@ def removeLocation():
 def travel():
     return "/travel"
 
+
+# ========================
+# =
+# =     Main
+# =
+# ========================
 if __name__ == '__main__':
     app.debug = True
     app.run(host='0.0.0.0')
