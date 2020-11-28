@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 import json
 from json import JSONEncoder
 
@@ -82,9 +82,13 @@ def hello():
 # =     Add spaceship
 # =
 # ========================
-@app.route('/addShip')
+@app.route('/spaceship', methods = ['POST'])
 def addSpaceship():
-    s = Spaceship('Name','MyModel','Thislocation','Maintenance')
+    print("==== POST at /spaceship")
+    # print(request.headers)
+    name = request.headers['name']
+    s = Spaceship(name,'MyModel','Thislocation','Maintenance')
+
     print(s.toJSON())
 
     ships[s.id] = s
@@ -96,9 +100,9 @@ def addSpaceship():
 # =      List spaceships (NOT REQUIRED)
 # =
 # ========================
-@app.route('/listShips')
+@app.route('/spaceship', methods = ['GET'])
 def listShips():
-    jsonStr = json.dumps(ships, indent=4, cls=SpaceshipEncoder)
+    jsonStr = json.dumps(ships, indent=4, cls=Encoder)
     print(jsonStr)
     return jsonStr
 
@@ -109,7 +113,7 @@ def listShips():
 # ========================
 # TODO: make PUT request
 # TODO: add queries
-@app.route('/updateShip')
+@app.route('/spaceship', methods = ['PUT'])
 def updateShip():
     return "/updateShip"
 
