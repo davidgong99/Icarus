@@ -59,10 +59,13 @@ class Location:
         self.city = city
         self.name = name
         self.planet = planet
+
+        if capacity <= 0:
+            raise ValueError("Invalid capacity")
         self.capacity = capacity
 
     def toJSON(self):
-        return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
+        return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True)
 
 
 # ========================
@@ -146,14 +149,14 @@ def addSpaceship():
     # Create spaceship
     try:
         s = Spaceship(name,model, location, state)
-    except ValueError:
-        return make_response(jsonify({'response': 'Invalid state', 'code': 422}), 422)
+    except ValueError as e:
+        return make_response(jsonify({'response': str(e), 'code': 422}), 422)
 
     print(s.toJSON())
 
     # Add spaceship to collection
     ships[s.id] = s
-    return make_response(s.toJSON(), 200)
+    return s.toJSON(), 200
 
 
 # ========================
@@ -198,11 +201,9 @@ def listLocations():
 
 # ========================
 # =
-# =      TODO: Add location
+# =      Add location
 # =
 # ========================
-# TODO: make POST request
-# TODO: add queries
 @app.route('/location', methods = ['POST'])
 def addLocation():
 
@@ -222,11 +223,13 @@ def addLocation():
     # Create location
     try:
         loc = Location(city, name, planetName, capacity)
-    except ValueError:
-        return make_response(jsonify({'response': 'Invalid state', 'code': 422}), 422)
+    except ValueError as e:
+        return make_response(jsonify({'response': str(e), 'code': 422}), 422)
 
     locations[loc.id] = loc
 
+    res = {'response': 'OK', 'code': 200, 'data': loc}
+    return make_response(jsonify({'response': 'OK', 'code': 200}), 200)
     return loc.toJSON(), 200
 
 # ========================
