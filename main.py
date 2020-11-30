@@ -44,6 +44,36 @@ class Spaceship:
         self.state = newState
         return 0
         
+    # If spaceship is operational, then it can travel - return 1
+    # Else, return 0
+    def canTravel(self):
+        if self.state == "Operational":
+            return 1
+        return 0
+
+    def travel(self, newLocation):
+        # Check if spaceship is operational
+        if not self.canTravel():
+            raise ValueError('Spaceship is not operational')
+            # return make_response(jsonify({'response': 'Spaceship is not operational', 'code': 422}), 422)
+
+        # Check if inputted location has enough capacity
+        if locations[newLocation].atMaxCapacity():
+            raise ValueError('Location is at maximum capacity')
+            # return make_response(jsonify({'response': 'Location is at maximum capacity', 'code': 422}), 422)
+
+        
+        # Decrease current location's capacity
+        locations[self.location].capacity -= 1
+
+        # Increase new location's capacity
+        locations[newLocation].capacity += 1
+
+        # Move ship to new location
+        self.location = newLocation
+
+        return 0
+
 
 # ========================
 # =
@@ -53,8 +83,8 @@ class Spaceship:
 class Location:
     locationCount = 0
 
-    def __init__(self, city, name, planet, capacity):
-        if capacity <= 0:
+    def __init__(self, city, name, planet, maxCapacity):
+        if maxCapacity <= 0:
             raise ValueError("Invalid capacity")
         
         self.id = Location.locationCount
@@ -62,11 +92,18 @@ class Location:
         self.city = city
         self.name = name
         self.planet = planet
-        self.capacity = capacity
+        self.maxCapacity = maxCapacity # maximum threshold
+        self.capacity = 0 # tracking ships currently at location
 
     def toJSON(self):
         return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
 
+    # If location is at maximum capacity, return 1
+    # Else return 0
+    def atMaxCapacity(self):
+        if self.capacity < self.maxCapacity:
+            return 0
+        return 1
 
 # ========================
 # =
@@ -292,9 +329,35 @@ def removeLocation():
 # ========================
 # TODO: make POST request
 # TODO: add queries
-@app.route('/travel')
+@app.route('/travel', methods = ['POST'])
 def travel():
-    return "/travel"
+
+    data = request.json
+
+    # Check that correct fields are supplied
+    requiredFields = ['spaceshipID', 'locationID']
+    if (checkFields(requiredFields, data) == -1):
+        return make_response(jsonify({'response': 'Bad request', 'code': 400}), 400)
+
+    # Extract data
+    spaceshipID = data['spaceshipID']
+    locationID = data['locationID']
+
+    # Check if inputted spaceship exists
+    if spaceshipID not in ships:
+        return make_response(jsonify({'response': 'Spaceship does not exist', 'code': 422}), 422)
+
+    # Check if inputted location exists
+    if locationID not in locations:
+        return make_response(jsonify({'response': 'Location does not exist', 'code': 422}), 422)
+
+    # Move ship to location
+    try:
+        ships[spaceshipID].travel(locationID)
+    except ValueError as e:
+        return make_response(jsonify({'response': str(e), 'code': 422}), 422)
+
+    return make_response(jsonify({'response': 'OK', 'code': 200}), 200)
 
 
 # ========================
