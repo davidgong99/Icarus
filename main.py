@@ -54,14 +54,14 @@ class Location:
     locationCount = 0
 
     def __init__(self, city, name, planet, capacity):
+        if capacity <= 0:
+            raise ValueError("Invalid capacity")
+        
         self.id = Location.locationCount
         Location.locationCount += 1
         self.city = city
         self.name = name
         self.planet = planet
-
-        if capacity <= 0:
-            raise ValueError("Invalid capacity")
         self.capacity = capacity
 
     def toJSON(self):
