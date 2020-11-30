@@ -76,7 +76,7 @@ Possible states:
 Example payload:
 ```python
 {
-    "spaceshipID": 1
+    "spaceshipID": 1,
     "state": "Operational"
 }
 ```
