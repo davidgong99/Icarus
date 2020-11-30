@@ -187,36 +187,101 @@ def updateShip():
 
 # ========================
 # =
+# =      List locations (NOT REQUIRED)
+# =
+# ========================
+@app.route('/location', methods = ['GET'])
+def listLocations():
+    jsonStr = json.dumps(locations, indent=4, cls=Encoder)
+    print(jsonStr)
+    return jsonStr, 200
+
+# ========================
+# =
 # =      TODO: Add location
 # =
 # ========================
 # TODO: make POST request
 # TODO: add queries
-@app.route('/addLocation')
+@app.route('/location', methods = ['POST'])
 def addLocation():
-    return "/addLocation"
+
+    data = request.json
+
+    # Check that correct fields are supplied
+    requiredFields = ['city', 'name', 'planetName', 'capacity']
+    if (checkFields(requiredFields, data) == -1):
+        return make_response(jsonify({'response': 'Bad request', 'code': 400}), 400)
+
+    # Extract data
+    city = data['city']
+    name = data['name']
+    planetName = data['planetName']
+    capacity = data['capacity']
+
+    # Create location
+    try:
+        loc = Location(city, name, planetName, capacity)
+    except ValueError:
+        return make_response(jsonify({'response': 'Invalid state', 'code': 422}), 422)
+
+    locations[loc.id] = loc
+
+    return loc.toJSON(), 200
 
 # ========================
 # =
-# =      TODO: Remove spaceship
+# =      Remove spaceship
 # =
 # ========================
-# TODO: make DEL request
-# TODO: add queries
-@app.route('/removeShip')
+@app.route('/spaceship', methods = ['DELETE'])
 def removeShip():
-    return "/removeShip"
+
+    data = request.json
+
+    # Check that correct fields are supplied
+    requiredFields = ['spaceshipID']
+    if (checkFields(requiredFields, data) == -1):
+        return make_response(jsonify({'response': 'Bad request', 'code': 400}), 400)
+
+    # Extract data
+    id = data['spaceshipID']
+
+    # Check the ship exists
+    if id not in ships:
+        return make_response(jsonify({'response': 'Spaceship could not be found', 'code': 404}), 404)
+
+    # Delete ship
+    del ships[id]
+
+    return make_response(jsonify({'response': 'OK', 'code': 200}), 200)
 
 # ========================
 # =
-# =      TODO: Remove location
+# =      Remove location
 # =
 # ========================
-# TODO: make DEL request
-# TODO: add queries
-@app.route('/removeLocation')
+@app.route('/location', methods = ['DELETE'])
 def removeLocation():
-    return "/removeLocation"
+
+    data = request.json
+
+    # Check that correct fields are supplied
+    requiredFields = ['locationID']
+    if (checkFields(requiredFields, data) == -1):
+        return make_response(jsonify({'response': 'Bad request', 'code': 400}), 400)
+
+    # Extract data
+    id = data['locationID']
+
+    # Check the ship exists
+    if id not in locations:
+        return make_response(jsonify({'response': 'Location could not be found', 'code': 404}), 404)
+
+    # Delete ship
+    del locations[id]
+
+    return make_response(jsonify({'response': 'OK', 'code': 200}), 200)
 
 # ========================
 # =
