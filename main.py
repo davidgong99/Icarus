@@ -84,24 +84,28 @@ def hello():
 # ========================
 @app.route('/spaceship', methods = ['POST'])
 def addSpaceship():
-    print("==== POST at /spaceship")
-    # print(request.headers)
-    requiredHeaders = ['name', 'model', 'location', 'status']
-    for header in requiredHeaders:
-        if not header in request.headers:
+
+    data = request.json
+   
+    # Check that correct fields are supplied
+    requiredFields = ['name', 'model', 'location', 'status']
+    for field in requiredFields:
+        if not field in data:
             abort(400)
 
-    name = request.headers['name']
-    model = request.headers['model']
-    location = request.headers['location']
-    status = request.headers['status']
+    # Extract data
+    name = data['name']
+    model = data['model']
+    location = data['location']
+    status = data['status']
 
+    # Create spaceship
     s = Spaceship(name,model, location, status)
 
     print(s.toJSON())
 
+    # Add spaceship to collection
     ships[s.id] = s
-
     return s.toJSON()
 
 # ========================
