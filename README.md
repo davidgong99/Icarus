@@ -41,23 +41,24 @@ Example payload:
     "name": "Shippy",
     "model": "Fast",
     "location": 1,
-    "status": "Maintenance"
+    "state": "Maintenance"
 }
 ```
 
 | Code |        Reason/Response          |
 |------| --------------------------------|
 | 200  | OK                              |
+| 400  | Bad request                     |
 
 ---
 
-**Update a spaceship's status**
+**Update a spaceship's state**
 
 `PUT`
 
 http://localhost:5000/spaceship
 
-Update a spaceship's status to another state.
+Update a spaceship's state to another state.
 
 Possible states:
 * Decommissioned
@@ -66,20 +67,22 @@ Possible states:
 
 `spaceshipID` must match an existing spaceship
 
-`status` must match one of the possible states
+`state` must match one of the possible states
 
 Example payload:
 ```python
 {
     "spaceshipID": 1
-    "status": "Operational"
+    "state": "Operational"
 }
 ```
 
 | Code |        Reason/Response          |
 |------| --------------------------------|
 | 200  | OK                              |
-| 404  | Spaceship could not be found    |
+| 400  | Bad request                     |
+| 422  | Spaceship does not exist        |
+| 422  | Invalid state                   |
 
 ---
 
