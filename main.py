@@ -65,7 +65,7 @@ class Location:
         self.capacity = capacity
 
     def toJSON(self):
-        return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True)
+        return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
 
 
 # ========================
@@ -143,8 +143,9 @@ def addSpaceship():
     location = data['location']
     state = data['state']
 
-
-    # TODO: check if inputted location exists
+    # Check if inputted location exists
+    if location not in locations:
+        return make_response(jsonify({'response': 'Location does not exist', 'code': 422}), 422)
 
     # Create spaceship
     try:
@@ -152,10 +153,9 @@ def addSpaceship():
     except ValueError as e:
         return make_response(jsonify({'response': str(e), 'code': 422}), 422)
 
-    print(s.toJSON())
-
     # Add spaceship to collection
     ships[s.id] = s
+
     return s.toJSON(), 200
 
 
@@ -226,10 +226,9 @@ def addLocation():
     except ValueError as e:
         return make_response(jsonify({'response': str(e), 'code': 422}), 422)
 
+    # Add location to collection
     locations[loc.id] = loc
 
-    res = {'response': 'OK', 'code': 200, 'data': loc}
-    return make_response(jsonify({'response': 'OK', 'code': 200}), 200)
     return loc.toJSON(), 200
 
 # ========================
