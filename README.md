@@ -49,6 +49,7 @@ Example payload:
 |------| --------------------------------|
 | 200  | OK                              |
 | 400  | Bad request                     |
+| 422  | Invalid state                   |
 
 ---
 
