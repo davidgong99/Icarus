@@ -288,7 +288,7 @@ def removeShip():
 
     # Check the ship exists
     if id not in ships:
-        return make_response(jsonify({'response': 'Spaceship could not be found', 'code': 404}), 404)
+        return make_response(jsonify({'response': 'Spaceship could not be found', 'code': 422}), 422)
 
     # Delete ship
     del ships[id]
@@ -315,7 +315,7 @@ def removeLocation():
 
     # Check the ship exists
     if id not in locations:
-        return make_response(jsonify({'response': 'Location could not be found', 'code': 404}), 404)
+        return make_response(jsonify({'response': 'Location could not be found', 'code': 422}), 422)
 
     # Delete ship
     del locations[id]
@@ -324,11 +324,9 @@ def removeLocation():
 
 # ========================
 # =
-# =      TODO: Travel
+# =      Travel
 # =
 # ========================
-# TODO: make POST request
-# TODO: add queries
 @app.route('/travel', methods = ['POST'])
 def travel():
 
