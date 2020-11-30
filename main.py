@@ -22,6 +22,9 @@ class Spaceship:
     possibleStates = ["Decomissioned", "Maintenance", "Operational"]
 
     def __init__(self, name, model, location, state):
+        if state not in self.possibleStates:
+            raise ValueError("Invalid state")
+
         self.id = Spaceship.spaceshipCount
         Spaceship.spaceshipCount += 1
         self.name = name
@@ -137,10 +140,14 @@ def addSpaceship():
     location = data['location']
     state = data['state']
 
-    # TODO: error if state is invalid
+
+    # TODO: check if inputted location exists
 
     # Create spaceship
-    s = Spaceship(name,model, location, state)
+    try:
+        s = Spaceship(name,model, location, state)
+    except ValueError:
+        return make_response(jsonify({'response': 'Invalid state', 'code': 422}), 422)
 
     print(s.toJSON())
 
@@ -151,7 +158,7 @@ def addSpaceship():
 
 # ========================
 # =
-# =      TODO: Update spaceship
+# =      Update spaceship
 # =
 # ========================
 @app.route('/spaceship', methods = ['PUT'])
