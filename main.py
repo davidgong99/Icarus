@@ -75,7 +75,18 @@ app = Flask(__name__)
 # ========================
 @app.route('/')
 def hello():
-    return 'Welcome to Icarus'
+    return 'Welcome to Icarus', 200
+
+# ========================
+# =
+# =      List spaceships (NOT REQUIRED)
+# =
+# ========================
+@app.route('/spaceship', methods = ['GET'])
+def listShips():
+    jsonStr = json.dumps(ships, indent=4, cls=Encoder)
+    print(jsonStr)
+    return jsonStr, 200
 
 # ========================
 # =
@@ -106,18 +117,8 @@ def addSpaceship():
 
     # Add spaceship to collection
     ships[s.id] = s
-    return s.toJSON()
+    return s.toJSON(), 200
 
-# ========================
-# =
-# =      List spaceships (NOT REQUIRED)
-# =
-# ========================
-@app.route('/spaceship', methods = ['GET'])
-def listShips():
-    jsonStr = json.dumps(ships, indent=4, cls=Encoder)
-    print(jsonStr)
-    return jsonStr
 
 # ========================
 # =
