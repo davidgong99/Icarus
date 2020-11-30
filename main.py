@@ -54,6 +54,9 @@ class Location:
     locationCount = 0
 
     def __init__(self, city, name, planet, capacity):
+        if capacity <= 0:
+            raise ValueError("Invalid capacity")
+        
         self.id = Location.locationCount
         Location.locationCount += 1
         self.city = city
@@ -140,20 +143,20 @@ def addSpaceship():
     location = data['location']
     state = data['state']
 
-
-    # TODO: check if inputted location exists
+    # Check if inputted location exists
+    if location not in locations:
+        return make_response(jsonify({'response': 'Location does not exist', 'code': 422}), 422)
 
     # Create spaceship
     try:
         s = Spaceship(name,model, location, state)
-    except ValueError:
-        return make_response(jsonify({'response': 'Invalid state', 'code': 422}), 422)
-
-    print(s.toJSON())
+    except ValueError as e:
+        return make_response(jsonify({'response': str(e), 'code': 422}), 422)
 
     # Add spaceship to collection
     ships[s.id] = s
-    return make_response(s.toJSON(), 200)
+
+    return s.toJSON(), 200
 
 
 # ========================
@@ -187,36 +190,100 @@ def updateShip():
 
 # ========================
 # =
-# =      TODO: Add location
+# =      List locations (NOT REQUIRED)
 # =
 # ========================
-# TODO: make POST request
-# TODO: add queries
-@app.route('/addLocation')
+@app.route('/location', methods = ['GET'])
+def listLocations():
+    jsonStr = json.dumps(locations, indent=4, cls=Encoder)
+    print(jsonStr)
+    return jsonStr, 200
+
+# ========================
+# =
+# =      Add location
+# =
+# ========================
+@app.route('/location', methods = ['POST'])
 def addLocation():
-    return "/addLocation"
+
+    data = request.json
+
+    # Check that correct fields are supplied
+    requiredFields = ['city', 'name', 'planetName', 'capacity']
+    if (checkFields(requiredFields, data) == -1):
+        return make_response(jsonify({'response': 'Bad request', 'code': 400}), 400)
+
+    # Extract data
+    city = data['city']
+    name = data['name']
+    planetName = data['planetName']
+    capacity = data['capacity']
+
+    # Create location
+    try:
+        loc = Location(city, name, planetName, capacity)
+    except ValueError as e:
+        return make_response(jsonify({'response': str(e), 'code': 422}), 422)
+
+    # Add location to collection
+    locations[loc.id] = loc
+
+    return loc.toJSON(), 200
 
 # ========================
 # =
-# =      TODO: Remove spaceship
+# =      Remove spaceship
 # =
 # ========================
-# TODO: make DEL request
-# TODO: add queries
-@app.route('/removeShip')
+@app.route('/spaceship', methods = ['DELETE'])
 def removeShip():
-    return "/removeShip"
+
+    data = request.json
+
+    # Check that correct fields are supplied
+    requiredFields = ['spaceshipID']
+    if (checkFields(requiredFields, data) == -1):
+        return make_response(jsonify({'response': 'Bad request', 'code': 400}), 400)
+
+    # Extract data
+    id = data['spaceshipID']
+
+    # Check the ship exists
+    if id not in ships:
+        return make_response(jsonify({'response': 'Spaceship could not be found', 'code': 404}), 404)
+
+    # Delete ship
+    del ships[id]
+
+    return make_response(jsonify({'response': 'OK', 'code': 200}), 200)
 
 # ========================
 # =
-# =      TODO: Remove location
+# =      Remove location
 # =
 # ========================
-# TODO: make DEL request
-# TODO: add queries
-@app.route('/removeLocation')
+@app.route('/location', methods = ['DELETE'])
 def removeLocation():
-    return "/removeLocation"
+
+    data = request.json
+
+    # Check that correct fields are supplied
+    requiredFields = ['locationID']
+    if (checkFields(requiredFields, data) == -1):
+        return make_response(jsonify({'response': 'Bad request', 'code': 400}), 400)
+
+    # Extract data
+    id = data['locationID']
+
+    # Check the ship exists
+    if id not in locations:
+        return make_response(jsonify({'response': 'Location could not be found', 'code': 404}), 404)
+
+    # Delete ship
+    del locations[id]
+
+    return make_response(jsonify({'response': 'OK', 'code': 200}), 200)
 
 # ========================
 # =
