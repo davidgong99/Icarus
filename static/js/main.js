@@ -68,6 +68,7 @@ $(document).ready(function(){
 
     })
 
+    // Handle submission for deleting spaceship
     $(document).on('click', '#delete-ship-button', function() {
         // Grab inputs
         var deleteID = $('#shipsDelete input[name=spaceshipID]').val();
@@ -106,9 +107,52 @@ $(document).ready(function(){
     })  
     
 
-    // $(document).on('click','#add-location-button', function() {
+    // Handle submission for adding location
+    $(document).on('click','#add-location-button', function() {
+        // Grab inputs
+        var city = $('#locationsAdd input[name=city]').val();
+        var name = $('#locationsAdd input[name=name]').val();
+        var planet = $('#locationsAdd input[name=planet]').val();
+        var capacity = $('#locationsAdd input[name=capacity]').val();
 
-    // })
+        // Store into payload object
+        var payload = {
+            "city": city,
+            "name": name,
+            "planetName": planet,
+            "capacity": capacity
+        }
+
+        // Make request
+        $.ajax({
+            url: './location',
+            method: 'POST',
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify(payload),
+            success: function(data) {
+                // Redirect to view all existing ships
+                showPage("locationsView");
+                console.log("Successful POST:" + data);
+
+                // Clear old information
+                $("#city").val('');
+                $("#location_name").val('');
+                $("#planet").val('');
+                $("#capacity").val('');
+                document.getElementById("add-location-error").style.visibility = "hidden";
+
+                // Set success message
+                $('#view-location-success').html("Location successfully created");
+                document.getElementById("view-location-success").style.visibility = "visible";
+            },
+        }).fail(function (XMLHttpRequest, textStatus, error) {
+            $('#add-location-error').html(XMLHttpRequest.responseText);
+            document.getElementById("add-location-error").style.visibility = "visible";
+            console.log("textStatus = " + textStatus);
+            console.log("error = " + error);
+        })
+    })
 
 
 });
@@ -194,6 +238,8 @@ function addLocationsToTable(locations) {
             + l.planet
             + '</td><td>'
             + l.capacity
+            + '</td><td>'
+            + l.maxCapacity
             + '</td></tr>'
         );
     }
