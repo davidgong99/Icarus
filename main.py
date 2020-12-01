@@ -373,8 +373,15 @@ def travel():
         return make_response(jsonify({'response': 'Bad request', 'code': 400}), 400)
 
     # Extract data
-    spaceshipID = data['spaceshipID']
-    locationID = data['locationID']
+    try:
+        spaceshipID = int(data['spaceshipID'])
+    except Exception as e:
+        return make_response(jsonify({'response': 'Spaceship does not exist', 'code': 422}), 422)
+
+    try:
+        locationID = data['locationID']
+    except Exception as e:
+        return make_response(jsonify({'response': 'Location does not exist', 'code': 422}), 422)
 
     # Check if inputted spaceship exists
     if spaceshipID not in ships:
