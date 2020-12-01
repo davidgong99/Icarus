@@ -91,7 +91,7 @@ $(document).ready(function(){
                 showPage("shipsView");
                 
                 // Clear old information
-                $("#deleteID").val('');
+                $("#spaceshipID").val('');
                 document.getElementById("delete-ship-error").style.visibility = "hidden";
 
                 // Set success message
@@ -154,6 +154,44 @@ $(document).ready(function(){
         })
     })
 
+
+    // Handle submission for deleting location
+    $(document).on('click', '#delete-location-button', function() {
+        // Grab inputs
+        var deleteID = $('#locationsDelete input[name=locationID]').val();
+
+        // Store into payload object
+        var payload = {
+            "locationID": deleteID
+        }
+
+        // Make request
+        $.ajax({
+            url: './location',
+            method: 'DELETE',
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify(payload),
+            success: function(data) {
+                console.log("Successful DELETE:" + data);
+                // Redirect to view all existing ships
+                showPage("locationsView");
+                
+                // Clear old information
+                $("#locationID").val('');
+                document.getElementById("delete-location-error").style.visibility = "hidden";
+
+                // Set success message
+                $('#view-location-success').html("Location successfully deleted");
+                document.getElementById("view-location-success").style.visibility = "visible";
+            }
+        }).fail(function (XMLHttpRequest, textStatus, error) {
+            $('#delete-location-error').html(XMLHttpRequest.responseText);
+            document.getElementById("delete-location-error").style.visibility = "visible";
+            console.log("textStatus = " + textStatus);
+            console.log("error = " + error);
+        });
+    })  
 
 });
 
