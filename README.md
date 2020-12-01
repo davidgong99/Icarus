@@ -11,6 +11,10 @@ To run: `py main.py`
 ## Task
 
 
+TODO
+* Make frontend (add buttons to imitate routes and sending body of data)
+* Create database schema
+
 ## Requirements
 
 
@@ -111,6 +115,9 @@ Example payload:
 | Code |        Reason/Response          |
 |------| --------------------------------|
 | 200  | OK                              |
+| 400  | Bad request                     |
+| 422  | Invalid capacity                |
+
 
 ---
 
@@ -132,7 +139,8 @@ Example payload:
 | Code |        Reason/Response          |
 |------| --------------------------------|
 | 200  | OK                              |
-| 404  | Spaceship could not be found    |
+| 400  | Bad request                     |
+| 422  | Spaceship could not be found    |
 
 ---
 
@@ -154,7 +162,8 @@ Example payload:
 | Code |        Reason/Response          |
 |------| --------------------------------|
 | 200  | OK                              |
-| 404  | Location could not be found     |
+| 400  | Bad request                     |
+| 422  | Location could not be found     |
 
 ---
 
@@ -177,5 +186,8 @@ Example payload:
 |------| --------------------------------|
 | 200  | OK                              |
 | 400  | Bad request                     |
-| 404  | Spaceship could not be found    |
-| 404  | Location could not be found     |
+| 422  | Spaceship does not exist        |
+| 422  | Location does not exist         |
+| 422  | Spaceship is not operational    |
+| 422  | Location is at maximum capacity |
+
