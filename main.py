@@ -182,8 +182,15 @@ def addSpaceship():
     # Extract data
     name = data['name']
     model = data['model']
-    location = data['location']
+
+    try:
+        location = int(data['location'])
+    except Exception as e:
+        return make_response(jsonify({'response': 'Location does not exist', 'code': 422}), 422)
+
     state = data['state']
+
+    # location = int(location)
 
     # Check if inputted location exists
     if location not in locations:
