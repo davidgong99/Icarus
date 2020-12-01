@@ -11,8 +11,6 @@ $(document).ready(function(){
     $('nav ul li').click(function() {
         console.log("naviation clickged");
         var displayPage = $(this).attr('data-displays');
-
-        
         
         showPage(displayPage);
     })
@@ -222,6 +220,9 @@ $(document).ready(function(){
 
 });
 
+
+// Redirection function for nav bar
+// Hides and shows necessary elements
 function showPage(page){
     console.log("displaying #" + page);
 
@@ -235,6 +236,7 @@ function showPage(page){
     $('#'+page).show();
 }
 
+// Request and display spaceships in spaceship table
 function refreshShips() {
     $.ajax({
         url: "./spaceship",
@@ -249,6 +251,7 @@ function refreshShips() {
     });
 }
 
+// Request and display locations in location table
 function refreshLocations() {
     $.ajax({
         url: "./location",
@@ -263,6 +266,8 @@ function refreshLocations() {
     });
 }
 
+
+// Render spaceships as rows in table
 function addShipsToTable(ships) {
     // Remove any existing ships from table
     $('#shipsView > table > tbody').empty();
@@ -285,7 +290,7 @@ function addShipsToTable(ships) {
     }
 }
 
-
+// Render locations as rows in table
 function addLocationsToTable(locations) {
     // Remove any existing ships from table
     $('#locationsView > table > tbody').empty();
