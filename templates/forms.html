@@ -65,7 +65,8 @@
                     <th>City</th>
                     <th>Name</th>
                     <th>Planet name</th>
-                    <th>Capacity</th>
+                    <th>Current capacity</th>
+                    <th>Maximum capacity</th>
                 </tr>
             </thead>
             <tbody>
@@ -81,7 +82,7 @@
         </div>
         <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" name="name" class="form-control" id="name">
+            <input type="text" name="name" class="form-control" id="location_name">
         </div>
         <div class="form-group">
             <label for="planet">Planet name</label>
@@ -92,7 +93,7 @@
             <input type="text" name="capacity" class="form-control" id="capacity">
         </div>
         <br>
-        <button class="btn btn-primary" id="add-ship-button">Add location</button>
+        <button class="btn btn-primary" id="add-location-button">Add location</button>
     </div>
     <div id="locationsDelete">
         <h2>Delete location</h2>
@@ -102,7 +103,7 @@
             <input type="text" name="locationID" class="form-control" id="locationID">
         </div>
         <br>
-        <button class="btn btn-primary" id="delete-ship-button">Delete location</button>
+        <button class="btn btn-primary" id="delete-location-button">Delete location</button>
     </div>
 </div>
 {% endblock %}
