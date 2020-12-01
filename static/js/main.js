@@ -136,15 +136,20 @@ function addShipsToTable(ships) {
     $('table > tbody').empty();
 
     len = Object.keys(ships).length;
-    
-    // Loop through each ship, and append to table as a new row
-    for (i = 0; i < len; i++) {
-        var obj = JSON.parse(ships[i]);
+
+    for (const [key, value] of Object.entries(ships)) {
+        var s = JSON.parse(value);
         $('table > tbody').append(
             '<tr><td>'
-            + obj.id
+            + s.id
             + '</td><td>'
-            + obj.name
+            + s.name
+            + '</td><td>'
+            + s.model
+            + '</td><td>'
+            + s.location
+            + '</td><td>'
+            + s.state
             + '</td></tr>'
         );
     }
