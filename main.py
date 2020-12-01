@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, make_response
+from flask import Flask, jsonify, request, make_response, render_template
 import json
 from json import JSONEncoder
 
@@ -146,6 +146,7 @@ app = Flask(__name__)
 # ========================
 @app.route('/')
 def hello():
+    return render_template('index.html')
     return 'Welcome to Icarus', 200
 
 # ========================
