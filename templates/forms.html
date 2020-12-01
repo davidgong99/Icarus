@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% block title %}Spaceships{% endblock %}
+{% block content %}
+<div class="container">
+
+    <!-- View ships -->
+    <div id="shipsView" class="table-responsive">
+        <h2>View spaceships</h2>
+        <div class="alert alert-success" id="view-ship-success" style="visibility: hidden"></div>
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Model</th>
+                    <th>Location</th>
+                    <th>State</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Add ships -->
+    <div id="shipsAdd">
+        <h2>Add Spaceship</h2>
+        <div class="alert alert-danger" id="add-ship-error" style="visibility: hidden"></div>
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" name="name" class="form-control" id="name">
+        </div>
+        <div class="form-group">
+            <label for="model">Model</label>
+            <input type="text" name="model" class="form-control" id="model">
+        </div>
+        <div class="form-group">
+            <label for="location">Location ID</label>
+            <input type="text" name="location" class="form-control" id="location">
+        </div>
+        <div class="form-group">
+            <label for="state">State</label>
+            <input type="text" name="state" class="form-control" id="state">
+        </div>
+        <br>
+        <button class="btn btn-primary" id="add-ship-button">Add spaceship</button>
+    </div>
+
+    <!-- Update ships state -->
+    <div id="shipsUpdate">
+        <h2>Update spaceship state</h2>
+        <div class="alert alert-danger" id="update-ship-error" style="visibility: hidden"></div>
+        <div class="form-group">
+            <label for="updateShipID">Spaceship ID</label>
+            <input type="text" name="updateShipID" class="form-control" id="updateShipID">
+        </div>
+        <div class="form-group">
+            <label for="newState">New state</label>
+            <input type="text" name="newState" class="form-control" id="newState">
+        </div>
+        <br>
+        <button class="btn btn-primary" id="update-ship-button">Update spaceship</button>
+    </div>
+
+    <!-- Delete ships -->
+    <div id="shipsDelete">
+        <h2>Delete Spaceship</h2>
+        <div class="alert alert-danger" id="delete-ship-error" style="visibility: hidden"></div>
+        <div class="form-group">
+            <label for="spaceshipID">Spaceship ID</label>
+            <input type="text" name="spaceshipID" class="form-control" id="spaceshipID">
+        </div>
+        <br>
+        <button class="btn btn-primary" id="delete-ship-button">Delete spaceship</button>
+    </div>
+
+
+
+    <!-- View locations -->
+    <div id="locationsView" class="table-responsive">
+        <h2>View locations</h2>
+        <div class="alert alert-success" id="view-location-success" style="visibility: hidden"></div>
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>City</th>
+                    <th>Name</th>
+                    <th>Planet name</th>
+                    <th>Current capacity</th>
+                    <th>Maximum capacity</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Add locations -->
+    <div id="locationsAdd">
+        <h2>Add location</h2>
+        <div class="alert alert-danger" id="add-location-error" style="visibility: hidden"></div>
+        <div class="form-group">
+            <label for="city">City</label>
+            <input type="text" name="city" class="form-control" id="city">
+        </div>
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" name="name" class="form-control" id="location_name">
+        </div>
+        <div class="form-group">
+            <label for="planet">Planet name</label>
+            <input type="text" name="planet" class="form-control" id="planet">
+        </div>
+        <div class="form-group">
+            <label for="capacity">Capacity</label>
+            <input type="text" name="capacity" class="form-control" id="capacity">
+        </div>
+        <br>
+        <button class="btn btn-primary" id="add-location-button">Add location</button>
+    </div>
+
+    <!-- Delete locations -->
+    <div id="locationsDelete">
+        <h2>Delete location</h2>
+        <div class="alert alert-danger" id="delete-location-error" style="visibility: hidden"></div>
+        <div class="form-group">
+            <label for="locationID">Location ID</label>
+            <input type="text" name="locationID" class="form-control" id="locationID">
+        </div>
+        <br>
+        <button class="btn btn-primary" id="delete-location-button">Delete location</button>
+    </div>
+
+    <!-- Travel -->
+    <div id="travel">
+        <h2>Travel</h2>
+        <div class="alert alert-danger" id="travel-error" style="visibility: hidden"></div>
+        <div class="form-group">
+            <label for="travelShipID">Spaceship ID</label>
+            <input type="text" name="travelShipID" class="form-control" id="travelShipID">
+        </div>
+        <div class="form-group">
+            <label for="travelLocationID">New location ID</label>
+            <input type="text" name="travelLocationID" class="form-control" id="travelLocationID">
+        </div>
+        <br>
+        <button class="btn btn-primary" id="travel-button">Update spaceship</button>
+    </div>
+</div>
+{% endblock %}
