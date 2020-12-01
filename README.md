@@ -11,6 +11,10 @@ To run: `py main.py`
 ## Task
 
 
+TODO
+* Make frontend (add buttons to imitate routes and sending body of data)
+* Create database schema
+
 ## Requirements
 
 
