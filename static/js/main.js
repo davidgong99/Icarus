@@ -18,6 +18,12 @@ $(document).ready(function(){
     })
 
     
+
+    // ======================
+    //
+    //      Add spaceship
+    //
+    // ======================
     // Handle submission for adding spaceship
     $(document).on('click', '#add-ship-button', function() {
 
@@ -68,6 +74,17 @@ $(document).ready(function(){
 
     })
 
+    // ======================
+    //
+    //      Update spaceship state
+    //
+    // ======================
+
+    // ======================
+    //
+    //      Delete spaceship
+    //
+    // ======================
     // Handle submission for deleting spaceship
     $(document).on('click', '#delete-ship-button', function() {
         // Grab inputs
@@ -107,6 +124,12 @@ $(document).ready(function(){
     })  
     
 
+
+    // ======================
+    //
+    //      Add location
+    //
+    // ======================
     // Handle submission for adding location
     $(document).on('click','#add-location-button', function() {
         // Grab inputs
@@ -154,7 +177,11 @@ $(document).ready(function(){
         })
     })
 
-
+    // ======================
+    //
+    //      Delete location
+    //
+    // ======================
     // Handle submission for deleting location
     $(document).on('click', '#delete-location-button', function() {
         // Grab inputs
