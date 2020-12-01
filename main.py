@@ -146,7 +146,7 @@ app = Flask(__name__)
 # ========================
 @app.route('/')
 def hello():
-    return render_template('ships.html')
+    return render_template('forms.html')
     return 'Welcome to Icarus', 200
 
 # ========================
