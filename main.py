@@ -228,8 +228,13 @@ def updateShip():
         return make_response(jsonify({'response': 'Bad request', 'code': 400}), 400)
 
     # Extract data
-    spaceshipID = data['spaceshipID']
     newState = data['state']
+
+    try:
+        spaceshipID = int(data['spaceshipID'])
+    except Exception as e:
+        return make_response(jsonify({'response': 'Spaceship does not exist', 'code': 422}), 422)
+
 
     # Check if spaceship exists
     if spaceshipID not in ships:
