@@ -379,7 +379,7 @@ def travel():
         return make_response(jsonify({'response': 'Spaceship does not exist', 'code': 422}), 422)
 
     try:
-        locationID = data['locationID']
+        locationID = int(data['locationID'])
     except Exception as e:
         return make_response(jsonify({'response': 'Location does not exist', 'code': 422}), 422)
 
