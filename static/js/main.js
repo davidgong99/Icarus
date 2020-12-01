@@ -104,6 +104,13 @@ $(document).ready(function(){
             console.log("error = " + error);
         });
     })  
+    
+
+    // $(document).on('click','#add-location-button', function() {
+
+    // })
+
+
 });
 
 function showPage(page){
@@ -112,6 +119,8 @@ function showPage(page){
     // Populate ships table when nav moves to the table
     if (page == "shipsView") {
         refreshShips();
+    } else if (page == "locationsView") {
+        refreshLocations();
     }
     $('.container > div').hide();
     $('#'+page).show();
@@ -131,15 +140,27 @@ function refreshShips() {
     });
 }
 
+function refreshLocations() {
+    $.ajax({
+        url: "./location",
+        method: "GET",
+        dataType: 'json',
+        success: function(data){
+            console.log("SUCCESSFUL AJAX");
+            console.log(data);
+
+            addLocationsToTable(data);
+        }
+    });
+}
+
 function addShipsToTable(ships) {
     // Remove any existing ships from table
-    $('table > tbody').empty();
-
-    len = Object.keys(ships).length;
+    $('#shipsView > table > tbody').empty();
 
     for (const [key, value] of Object.entries(ships)) {
         var s = JSON.parse(value);
-        $('table > tbody').append(
+        $('#shipsView > table > tbody').append(
             '<tr><td>'
             + s.id
             + '</td><td>'
@@ -150,6 +171,29 @@ function addShipsToTable(ships) {
             + s.location
             + '</td><td>'
             + s.state
+            + '</td></tr>'
+        );
+    }
+}
+
+
+function addLocationsToTable(locations) {
+    // Remove any existing ships from table
+    $('#locationsView > table > tbody').empty();
+
+    for (const [key, value] of Object.entries(locations)) {
+        var l = JSON.parse(value);
+        $('#locationsView > table > tbody').append(
+            '<tr><td>'
+            + l.id
+            + '</td><td>'
+            + l.city
+            + '</td><td>'
+            + l.name
+            + '</td><td>'
+            + l.planet
+            + '</td><td>'
+            + l.capacity
             + '</td></tr>'
         );
     }
