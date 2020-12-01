@@ -296,7 +296,11 @@ def removeShip():
         return make_response(jsonify({'response': 'Bad request', 'code': 400}), 400)
 
     # Extract data
-    id = data['spaceshipID']
+    try:
+        id = int(data['spaceshipID'])
+    except Exception as e:
+        return make_response(jsonify({'response': 'Spaceship could not be found', 'code': 422}), 422)
+
 
     # Check the ship exists
     if id not in ships:
@@ -323,7 +327,10 @@ def removeLocation():
         return make_response(jsonify({'response': 'Bad request', 'code': 400}), 400)
 
     # Extract data
-    id = data['locationID']
+    try:
+        id = int(data['locationID'])
+    except Exception as e:
+        return make_response(jsonify({'response': 'Location could not be found', 'code': 422}), 422)
 
     # Check the ship exists
     if id not in locations:
