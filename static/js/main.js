@@ -20,7 +20,7 @@ $(document).ready(function(){
 
 function showPage(page){
     console.log("displaying #" + page);
-    $('container > div').hide();
+    $('.container > div').hide();
     $('#'+page).show();
 }
 
