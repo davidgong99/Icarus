@@ -1,5 +1,4 @@
 $(document).ready(function(){
-    console.log("READY");
     // When page loads, display #shipsView
     $('.container > div').hide();
     $('.container > #shipsView').show();
@@ -9,14 +8,11 @@ $(document).ready(function(){
 
     // Handle clicking of nav items
     $('nav ul li').click(function() {
-        console.log("naviation clickged");
-        var displayPage = $(this).attr('data-displays');
-        
+        var displayPage = $(this).attr('data-displays');        
         showPage(displayPage);
     })
 
     
-
     // ======================
     //
     //      Add spaceship
@@ -49,7 +45,6 @@ $(document).ready(function(){
             success: function(data) {
                 // Redirect to view all existing ships
                 showPage("shipsView");
-                console.log("Successful POST:" + data);
 
                 // Clear old information
                 $("#name").val('');
@@ -63,10 +58,9 @@ $(document).ready(function(){
                 document.getElementById("view-ship-success").style.visibility = "visible";
             },
         }).fail(function (XMLHttpRequest, textStatus, error) {
+            // Write and display error message
             $('#add-ship-error').html(XMLHttpRequest.responseText);
             document.getElementById("add-ship-error").style.visibility = "visible";
-            console.log("textStatus = " + textStatus);
-            console.log("error = " + error);
         })
     })
 
@@ -81,7 +75,6 @@ $(document).ready(function(){
         // Grab inputs
         var spaceshipID = $('#shipsUpdate input[name=updateShipID]').val();
         var newState = $('#shipsUpdate input[name=newState]').val();
-        
         
         // Store into payload object
         var payload = {
@@ -99,7 +92,6 @@ $(document).ready(function(){
             success: function(data) {
                 // Redirect to view all existing ships
                 showPage("shipsView");
-                console.log("Successful POST:" + data);
 
                 // Clear old information
                 $("#updateShipID").val('');
@@ -111,10 +103,10 @@ $(document).ready(function(){
                 document.getElementById("view-ship-success").style.visibility = "visible";
             },
         }).fail(function (XMLHttpRequest, textStatus, error) {
+            // Write and display error message
             $('#update-ship-error').html(XMLHttpRequest.responseText);
             document.getElementById("update-ship-error").style.visibility = "visible";
-            console.log("textStatus = " + textStatus);
-            console.log("error = " + error);
+            
         })
     })
 
@@ -143,7 +135,6 @@ $(document).ready(function(){
             contentType: 'application/json',
             data: JSON.stringify(payload),
             success: function(data) {
-                console.log("Successful DELETE:" + data);
                 // Redirect to view all existing ships
                 showPage("shipsView");
                 
@@ -156,10 +147,9 @@ $(document).ready(function(){
                 document.getElementById("view-ship-success").style.visibility = "visible";
             }
         }).fail(function (XMLHttpRequest, textStatus, error) {
+            // Write and display error message
             $('#delete-ship-error').html(XMLHttpRequest.responseText);
             document.getElementById("delete-ship-error").style.visibility = "visible";
-            console.log("textStatus = " + textStatus);
-            console.log("error = " + error);
         });
     })  
     
@@ -194,9 +184,8 @@ $(document).ready(function(){
             contentType: 'application/json',
             data: JSON.stringify(payload),
             success: function(data) {
-                // Redirect to view all existing ships
+                // Redirect to view all existing locations
                 showPage("locationsView");
-                console.log("Successful POST:" + data);
 
                 // Clear old information
                 $("#city").val('');
@@ -210,10 +199,9 @@ $(document).ready(function(){
                 document.getElementById("view-location-success").style.visibility = "visible";
             },
         }).fail(function (XMLHttpRequest, textStatus, error) {
+            // Write and display error message
             $('#add-location-error').html(XMLHttpRequest.responseText);
             document.getElementById("add-location-error").style.visibility = "visible";
-            console.log("textStatus = " + textStatus);
-            console.log("error = " + error);
         })
     })
 
@@ -240,8 +228,7 @@ $(document).ready(function(){
             contentType: 'application/json',
             data: JSON.stringify(payload),
             success: function(data) {
-                console.log("Successful DELETE:" + data);
-                // Redirect to view all existing ships
+                // Redirect to view all existing locations
                 showPage("locationsView");
                 
                 // Clear old information
@@ -253,10 +240,9 @@ $(document).ready(function(){
                 document.getElementById("view-location-success").style.visibility = "visible";
             }
         }).fail(function (XMLHttpRequest, textStatus, error) {
+            // Write and display error message
             $('#delete-location-error').html(XMLHttpRequest.responseText);
             document.getElementById("delete-location-error").style.visibility = "visible";
-            console.log("textStatus = " + textStatus);
-            console.log("error = " + error);
         });
     })  
 
@@ -287,7 +273,6 @@ $(document).ready(function(){
             success: function(data) {
                 // Redirect to view all existing ships
                 showPage("shipsView");
-                console.log("Successful POST:" + data);
 
                 // Clear old information
                 $("#travelShipID").val('');
@@ -300,10 +285,9 @@ $(document).ready(function(){
                 document.getElementById("view-ship-success").style.visibility = "visible";
             },
         }).fail(function (XMLHttpRequest, textStatus, error) {
+            // Write and display error message
             $('#travel-error').html(XMLHttpRequest.responseText);
             document.getElementById("travel-error").style.visibility = "visible";
-            console.log("textStatus = " + textStatus);
-            console.log("error = " + error);
         })
     })
 
@@ -313,8 +297,6 @@ $(document).ready(function(){
 // Redirection function for nav bar
 // Hides and shows necessary elements
 function showPage(page){
-    console.log("displaying #" + page);
-
     // Populate ships table when nav moves to the table
     if (page == "shipsView") {
         refreshShips();
@@ -331,12 +313,7 @@ function refreshShips() {
         url: "./spaceship",
         method: "GET",
         dataType: 'json',
-        success: function(data){
-            console.log("SUCCESSFUL AJAX");
-            console.log(data);
-
-            addShipsToTable(data);
-        }
+        success: addShipsToTable
     });
 }
 
@@ -346,12 +323,7 @@ function refreshLocations() {
         url: "./location",
         method: "GET",
         dataType: 'json',
-        success: function(data){
-            console.log("SUCCESSFUL AJAX");
-            console.log(data);
-
-            addLocationsToTable(data);
-        }
+        success: addLocationsToTable
     });
 }
 

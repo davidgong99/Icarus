@@ -62,13 +62,10 @@ class Spaceship:
         # Check if spaceship is operational
         if not self.canTravel():
             raise ValueError('Spaceship is not operational')
-            # return make_response(jsonify({'response': 'Spaceship is not operational', 'code': 422}), 422)
 
         # Check if inputted location has enough capacity
         if locations[newLocation].atMaxCapacity():
             raise ValueError('Location is at maximum capacity')
-            # return make_response(jsonify({'response': 'Location is at maximum capacity', 'code': 422}), 422)
-
         
         # Decrease current location's capacity
         locations[self.location].capacity -= 1
@@ -154,7 +151,6 @@ app = Flask(__name__)
 @app.route('/')
 def hello():
     return render_template('forms.html')
-    return 'Welcome to Icarus', 200
 
 # ========================
 # =
@@ -186,18 +182,14 @@ def addSpaceship():
     # Extract data
     name = data['name']
     model = data['model']
-
-    try:
-        location = int(data['location'])
-    except Exception as e:
-        return make_response(jsonify({'response': 'Location does not exist', 'code': 422}), 422)
-
     state = data['state']
 
-    # location = int(location)
-
     # Check if inputted location exists
-    if location not in locations:
+    try:
+        location = int(data['location'])
+        if location not in locations:
+            return make_response(jsonify({'response': 'Location does not exist', 'code': 422}), 422)
+    except Exception as e:
         return make_response(jsonify({'response': 'Location does not exist', 'code': 422}), 422)
 
     # Create spaceship
@@ -230,16 +222,14 @@ def updateShip():
     # Extract data
     newState = data['state']
 
+    # Check if spaceship exists
     try:
         spaceshipID = int(data['spaceshipID'])
+        if spaceshipID not in ships:
+            return make_response(jsonify({'response': 'Spaceship does not exist', 'code': 422}), 422)
     except Exception as e:
         return make_response(jsonify({'response': 'Spaceship does not exist', 'code': 422}), 422)
-
-
-    # Check if spaceship exists
-    if spaceshipID not in ships:
-        return make_response(jsonify({'response': 'Spaceship does not exist', 'code': 422}), 422)
-
+    
     # Try update state
     if (ships[spaceshipID].setState(newState) == -1):
         return make_response(jsonify({'response': 'Invalid state', 'code': 422}), 422)
@@ -279,6 +269,7 @@ def addLocation():
     name = data['name']
     planetName = data['planetName']
 
+    # Check for valid capacity value
     try:
         capacity = int(data['capacity'])
     except Exception as e:
@@ -312,14 +303,12 @@ def removeShip():
         return make_response(jsonify({'response': 'Bad request', 'code': 400}), 400)
 
     # Extract data
+    # Check the ship exists
     try:
         id = int(data['spaceshipID'])
+        if id not in ships:
+            return make_response(jsonify({'response': 'Spaceship could not be found', 'code': 422}), 422)
     except Exception as e:
-        return make_response(jsonify({'response': 'Spaceship could not be found', 'code': 422}), 422)
-
-
-    # Check the ship exists
-    if id not in ships:
         return make_response(jsonify({'response': 'Spaceship could not be found', 'code': 422}), 422)
 
     # Delete ship
@@ -343,15 +332,14 @@ def removeLocation():
         return make_response(jsonify({'response': 'Bad request', 'code': 400}), 400)
 
     # Extract data
+    # Check the location exists
     try:
         id = int(data['locationID'])
+        if id not in locations:
+            return make_response(jsonify({'response': 'Location could not be found', 'code': 422}), 422)
     except Exception as e:
         return make_response(jsonify({'response': 'Location could not be found', 'code': 422}), 422)
-
-    # Check the ship exists
-    if id not in locations:
-        return make_response(jsonify({'response': 'Location could not be found', 'code': 422}), 422)
-
+    
     # Delete ship
     del locations[id]
 
@@ -373,22 +361,20 @@ def travel():
         return make_response(jsonify({'response': 'Bad request', 'code': 400}), 400)
 
     # Extract data
+    # Check if inputted spaceship exists
     try:
         spaceshipID = int(data['spaceshipID'])
+        if spaceshipID not in ships:
+            return make_response(jsonify({'response': 'Spaceship does not exist', 'code': 422}), 422)
     except Exception as e:
-        return make_response(jsonify({'response': 'Spaceship does not exist', 'code': 422}), 422)
-
-    try:
-        locationID = int(data['locationID'])
-    except Exception as e:
-        return make_response(jsonify({'response': 'Location does not exist', 'code': 422}), 422)
-
-    # Check if inputted spaceship exists
-    if spaceshipID not in ships:
         return make_response(jsonify({'response': 'Spaceship does not exist', 'code': 422}), 422)
 
     # Check if inputted location exists
-    if locationID not in locations:
+    try:
+        locationID = int(data['locationID'])
+        if locationID not in locations:
+            return make_response(jsonify({'response': 'Location does not exist', 'code': 422}), 422)
+    except Exception as e:
         return make_response(jsonify({'response': 'Location does not exist', 'code': 422}), 422)
 
     # Move ship to location
@@ -398,7 +384,6 @@ def travel():
         return make_response(jsonify({'response': str(e), 'code': 422}), 422)
 
     return make_response(jsonify({'response': 'OK', 'code': 200}), 200)
-
 
 # ========================
 # =
