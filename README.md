@@ -2,6 +2,7 @@
 Basic REST API for tracking objects
 
 ## Specs
+---
 Python version 3.8.5
 
 To install all required packages: `pip3 install -r requirements.txt`
@@ -9,17 +10,6 @@ To install all required packages: `pip3 install -r requirements.txt`
 To run server: `py main.py`
 
 To view frontend: Go to `http://localhost:5000/`
-
-
-## Task
-
-
-TODO
-* Make frontend (add buttons to imitate routes and sending body of data)
-* Create database schema
-
-## Requirements
-
 
 ## Routes and responses
 ---
