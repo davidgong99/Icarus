@@ -4,18 +4,26 @@ $(document).ready(function(){
     $('.container > div').hide();
     $('.container > #shipsView').show();
 
+    // Populate ships table for initial viewing
+    refreshShips();
+
     // Handle clicking of nav items
     $('nav ul li').click(function() {
         console.log("naviation clickged");
         var displayPage = $(this).attr('data-displays');
+
+        // Populate ships table when nav moves to the table
+        if (displayPage == "shipsView") {
+            refreshShips();
+        }
+        
         showPage(displayPage);
     })
-    console.log("adsads");
 
-    refreshShips();
+    
+    
 
-    console.log("after refresh ships");
-
+    
 });
 
 function showPage(page){
@@ -25,7 +33,6 @@ function showPage(page){
 }
 
 function refreshShips() {
-    console.log("pre-ajax");
     $.ajax({
         url: "./spaceship",
         method: "GET",
@@ -37,7 +44,6 @@ function refreshShips() {
             addShipsToTable(data);
         }
     });
-    console.log("post-ajax");
 }
 
 function addShipsToTable(ships) {
