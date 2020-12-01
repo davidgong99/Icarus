@@ -68,8 +68,6 @@ $(document).ready(function(){
             console.log("textStatus = " + textStatus);
             console.log("error = " + error);
         })
-
-
     })
 
     // ======================
@@ -77,6 +75,50 @@ $(document).ready(function(){
     //      Update spaceship state
     //
     // ======================
+    // Handle submission for updating spaceship state
+    $(document).on('click', '#update-ship-button', function() {
+
+        // Grab inputs
+        var spaceshipID = $('#shipsUpdate input[name=updateShipID]').val();
+        var newState = $('#shipsUpdate input[name=newState]').val();
+        
+        
+        // Store into payload object
+        var payload = {
+            'spaceshipID': spaceshipID,
+            'state': newState
+        };
+
+        // Make request
+        $.ajax({
+            url: './spaceship',
+            method: 'PUT',
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify(payload),
+            success: function(data) {
+                // Redirect to view all existing ships
+                showPage("shipsView");
+                console.log("Successful POST:" + data);
+
+                // Clear old information
+                $("#updateShipID").val('');
+                $("#newState").val('');
+                document.getElementById("update-ship-error").style.visibility = "hidden";
+
+                // Set success message
+                $('#view-ship-success').html("Ship successfully updated");
+                document.getElementById("view-ship-success").style.visibility = "visible";
+            },
+        }).fail(function (XMLHttpRequest, textStatus, error) {
+            $('#update-ship-error').html(XMLHttpRequest.responseText);
+            document.getElementById("update-ship-error").style.visibility = "visible";
+            console.log("textStatus = " + textStatus);
+            console.log("error = " + error);
+        })
+    })
+
+
 
     // ======================
     //

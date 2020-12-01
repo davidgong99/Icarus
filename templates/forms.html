@@ -2,6 +2,8 @@
 {% block title %}Spaceships{% endblock %}
 {% block content %}
 <div class="container">
+
+    <!-- View ships -->
     <div id="shipsView" class="table-responsive">
         <h2>View spaceships</h2>
         <div class="alert alert-success" id="view-ship-success" style="visibility: hidden"></div>
@@ -19,6 +21,8 @@
             </tbody>
         </table>
     </div>
+
+    <!-- Add ships -->
     <div id="shipsAdd">
         <h2>Add Spaceship</h2>
         <div class="alert alert-danger" id="add-ship-error" style="visibility: hidden"></div>
@@ -41,6 +45,24 @@
         <br>
         <button class="btn btn-primary" id="add-ship-button">Add spaceship</button>
     </div>
+
+    <!-- Update ships state -->
+    <div id="shipsUpdate">
+        <h2>Update spaceship state</h2>
+        <div class="alert alert-danger" id="update-ship-error" style="visibility: hidden"></div>
+        <div class="form-group">
+            <label for="updateShipID">Spaceship ID</label>
+            <input type="text" name="updateShipID" class="form-control" id="updateShipID">
+        </div>
+        <div class="form-group">
+            <label for="newState">New state</label>
+            <input type="text" name="newState" class="form-control" id="newState">
+        </div>
+        <br>
+        <button class="btn btn-primary" id="update-ship-button">Update spaceship</button>
+    </div>
+
+    <!-- Delete ships -->
     <div id="shipsDelete">
         <h2>Delete Spaceship</h2>
         <div class="alert alert-danger" id="delete-ship-error" style="visibility: hidden"></div>
@@ -54,7 +76,7 @@
 
 
 
-
+    <!-- View locations -->
     <div id="locationsView" class="table-responsive">
         <h2>View locations</h2>
         <div class="alert alert-success" id="view-location-success" style="visibility: hidden"></div>
@@ -73,6 +95,8 @@
             </tbody>
         </table>
     </div>
+
+    <!-- Add locations -->
     <div id="locationsAdd">
         <h2>Add location</h2>
         <div class="alert alert-danger" id="add-location-error" style="visibility: hidden"></div>
@@ -95,6 +119,8 @@
         <br>
         <button class="btn btn-primary" id="add-location-button">Add location</button>
     </div>
+
+    <!-- Delete locations -->
     <div id="locationsDelete">
         <h2>Delete location</h2>
         <div class="alert alert-danger" id="delete-location-error" style="visibility: hidden"></div>
