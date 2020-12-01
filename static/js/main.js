@@ -260,6 +260,53 @@ $(document).ready(function(){
         });
     })  
 
+    // ======================
+    //
+    //      Travel
+    //
+    // ======================
+    // Handle submission for spaceship travel between locations
+    $(document).on('click', '#travel-button', function() {
+        // Grab inputs
+        var spaceshipID = $('#travel input[name=travelShipID]').val();
+        var locationID = $('#travel input[name=travelLocationID]').val();
+        
+        // Store into payload object
+        var payload = {
+            'spaceshipID': spaceshipID,
+            'locationID': locationID
+        };
+
+        // Make request
+        $.ajax({
+            url: './travel',
+            method: 'POST',
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify(payload),
+            success: function(data) {
+                // Redirect to view all existing ships
+                showPage("shipsView");
+                console.log("Successful POST:" + data);
+
+                // Clear old information
+                $("#travelShipID").val('');
+                $("#travelLocationID").val('');
+               
+                document.getElementById("travel-error").style.visibility = "hidden";
+
+                // Set success message
+                $('#view-ship-success').html("Ship successfully travelled");
+                document.getElementById("view-ship-success").style.visibility = "visible";
+            },
+        }).fail(function (XMLHttpRequest, textStatus, error) {
+            $('#travel-error').html(XMLHttpRequest.responseText);
+            document.getElementById("travel-error").style.visibility = "visible";
+            console.log("textStatus = " + textStatus);
+            console.log("error = " + error);
+        })
+    })
+
 });
 
 
