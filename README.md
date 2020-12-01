@@ -6,7 +6,10 @@ Python version 3.8.5
 
 To install all required packages: `pip3 install -r requirements.txt`
 
-To run: `py main.py`
+To run server: `py main.py`
+
+To view frontend: Go to `http://localhost:5000/`
+
 
 ## Task
 
@@ -19,6 +22,7 @@ TODO
 
 
 ## Routes and responses
+---
 
 **List all spaceships**
 
@@ -31,6 +35,7 @@ Returns all spaceships that exist (ordered by ID) in JSON form
 | Code |        Reason/Response          |
 |------| --------------------------------|
 | 200  | OK                              |
+
 ---
 
 **Add spaceship**
