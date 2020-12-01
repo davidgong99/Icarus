@@ -156,9 +156,13 @@ def hello():
 # ========================
 @app.route('/spaceship', methods = ['GET'])
 def listShips():
-    jsonStr = json.dumps(ships, indent=4, cls=Encoder)
-    print(jsonStr)
-    return jsonStr, 200
+    # jsonStr = json.dumps(ships, indent=4, cls=Encoder)
+    # print(jsonStr)
+    res = {}
+    for s in ships.values():
+        res[s.id] = s.toJSON()
+    return res
+    # return jsonStr, 200
 
 # ========================
 # =
