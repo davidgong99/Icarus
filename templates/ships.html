@@ -4,7 +4,7 @@
 <div class="container">
     <div id="shipsView" class="table-responsive">
         <h2>View spaceships</h2>
-        <div class="alert alert-success" id="add-ship-success" style="visibility: hidden"></div>
+        <div class="alert alert-success" id="view-ship-success" style="visibility: hidden"></div>
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>
@@ -37,6 +37,16 @@
         </div>
         <br>
         <button class="btn btn-primary" id="add-ship-button">Add spaceship</button>
+    </div>
+    <div id="shipsDelete">
+        <h2>Delete Spaceship</h2>
+        <div class="alert alert-danger" id="delete-ship-error" style="visibility: hidden"></div>
+        <div class="form-group">
+            <label for="deleteID">Spaceship ID</label>
+            <input type="text" name="deleteID" class="form-control" id="deleteID">
+        </div>
+        <br>
+        <button class="btn btn-primary" id="delete-ship-button">Delete spaceship</button>
     </div>
 </div>
 {% endblock %}

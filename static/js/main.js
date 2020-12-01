@@ -35,7 +35,7 @@ $(document).ready(function(){
             'state': state
         };
 
-        // Verify and send data
+        // Make request
         $.ajax({
             url: './spaceship',
             method: 'POST',
@@ -55,8 +55,8 @@ $(document).ready(function(){
                 document.getElementById("add-ship-error").style.visibility = "hidden";
 
                 // Set success message
-                $('#add-ship-success').html("Ship successfully created");
-                document.getElementById("add-ship-success").style.visibility = "visible";
+                $('#view-ship-success').html("Ship successfully created");
+                document.getElementById("view-ship-success").style.visibility = "visible";
             },
         }).fail(function (XMLHttpRequest, textStatus, error) {
             $('#add-ship-error').html(XMLHttpRequest.responseText);
@@ -68,7 +68,42 @@ $(document).ready(function(){
 
     })
 
-    
+    $(document).on('click', '#delete-ship-button', function() {
+        // Grab inputs
+        var deleteID = $('#shipsDelete input[name=deleteID]').val();
+
+        // Store into payload object
+        var payload = {
+            "spaceshipID": deleteID
+        }
+
+        // Make request
+        $.ajax({
+            url: './spaceship',
+            method: 'DELETE',
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify(payload),
+            success: function(data) {
+                console.log("Successful DELETE:" + data);
+                // Redirect to view all existing ships
+                showPage("shipsView");
+                
+                // Clear old information
+                $("#deleteID").val('');
+                document.getElementById("delete-ship-error").style.visibility = "hidden";
+
+                // Set success message
+                $('#view-ship-success').html("Ship successfully deleted");
+                document.getElementById("view-ship-success").style.visibility = "visible";
+            }
+        }).fail(function (XMLHttpRequest, textStatus, error) {
+            $('#delete-ship-error').html(XMLHttpRequest.responseText);
+            document.getElementById("delete-ship-error").style.visibility = "visible";
+            console.log("textStatus = " + textStatus);
+            console.log("error = " + error);
+        });
+    })  
 });
 
 function showPage(page){
