@@ -43,8 +43,20 @@ $(document).ready(function(){
             contentType: 'application/json',
             data: JSON.stringify(payload),
             success: function(data) {
+                // Redirect to view all existing ships
                 showPage("shipsView");
                 console.log("Successful POST:" + data);
+
+                // Clear old information
+                $("#name").val('');
+                $("#model").val('');
+                $("#location").val('');
+                $("#state").val('');
+                document.getElementById("add-ship-error").style.visibility = "hidden";
+
+                // Set success message
+                $('#add-ship-success').html("Ship successfully created");
+                document.getElementById("add-ship-success").style.visibility = "visible";
             },
         }).fail(function (XMLHttpRequest, textStatus, error) {
             $('#add-ship-error').html(XMLHttpRequest.responseText);
