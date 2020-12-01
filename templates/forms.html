@@ -131,5 +131,21 @@
         <br>
         <button class="btn btn-primary" id="delete-location-button">Delete location</button>
     </div>
+
+    <!-- Travel -->
+    <div id="travel">
+        <h2>Travel</h2>
+        <div class="alert alert-danger" id="travel-error" style="visibility: hidden"></div>
+        <div class="form-group">
+            <label for="travelShipID">Spaceship ID</label>
+            <input type="text" name="travelShipID" class="form-control" id="travelShipID">
+        </div>
+        <div class="form-group">
+            <label for="travelLocationID">New location iD</label>
+            <input type="text" name="travelLocationID" class="form-control" id="travelLocationID">
+        </div>
+        <br>
+        <button class="btn btn-primary" id="travel-button">Update spaceship</button>
+    </div>
 </div>
 {% endblock %}
