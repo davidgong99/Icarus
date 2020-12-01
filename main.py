@@ -92,7 +92,7 @@ class Location:
 
     def __init__(self, city, name, planet, maxCapacity):
         if maxCapacity <= 0:
-            raise ValueError("Invalid capacity")
+            raise ValueError("Capacity must be a positive integer")
         
         self.id = Location.locationCount
         Location.locationCount += 1
@@ -277,7 +277,7 @@ def addLocation():
     try:
         capacity = int(data['capacity'])
     except Exception as e:
-        return make_response(jsonify({'response': str(e), 'code': 422}), 422)
+        return make_response(jsonify({'response': "Capacity must be a positive integer", 'code': 422}), 422)
 
 
     # Create location
