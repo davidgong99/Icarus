@@ -22,8 +22,15 @@ class Spaceship:
     possibleStates = ["Decomissioned", "Maintenance", "Operational"]
 
     def __init__(self, name, model, location, state):
+        # check if state is valid
         if state not in self.possibleStates:
             raise ValueError("Invalid state")
+
+        # check if location is already full - if not, add ship to it
+        if locations[location].atMaxCapacity():
+            raise ValueError("Location is at maximum capacity")
+        else:
+            locations[location].capacity += 1
 
         self.id = Spaceship.spaceshipCount
         Spaceship.spaceshipCount += 1
@@ -266,7 +273,12 @@ def addLocation():
     city = data['city']
     name = data['name']
     planetName = data['planetName']
-    capacity = data['capacity']
+
+    try:
+        capacity = int(data['capacity'])
+    except Exception as e:
+        return make_response(jsonify({'response': str(e), 'code': 422}), 422)
+
 
     # Create location
     try:
