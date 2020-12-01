@@ -12,22 +12,60 @@ $(document).ready(function(){
         console.log("naviation clickged");
         var displayPage = $(this).attr('data-displays');
 
-        // Populate ships table when nav moves to the table
-        if (displayPage == "shipsView") {
-            refreshShips();
-        }
+        
         
         showPage(displayPage);
     })
 
     
-    
+    // Handle submission for adding spaceship
+    $(document).on('click', '#add-ship-button', function() {
+
+        // Grab inputs
+        var name = $('#shipsAdd input[name=name]').val();
+        var model = $('#shipsAdd input[name=model]').val();
+        var location = $('#shipsAdd input[name=location]').val();
+        var state = $('#shipsAdd input[name=state]').val();
+        
+        // Store into payload object
+        var payload = {
+            'name': name,
+            'model': model,
+            'location': location,
+            'state': state
+        };
+
+        // Verify and send data
+        $.ajax({
+            url: './spaceship',
+            method: 'POST',
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify(payload),
+            success: function(data) {
+                showPage("shipsView");
+                console.log("Successful POST:" + data);
+            },
+        }).fail(function (XMLHttpRequest, textStatus, error) {
+            $('#add-ship-error').html(XMLHttpRequest.responseText);
+            document.getElementById("add-ship-error").style.visibility = "visible";
+            console.log("textStatus = " + textStatus);
+            console.log("error = " + error);
+        })
+
+
+    })
 
     
 });
 
 function showPage(page){
     console.log("displaying #" + page);
+
+    // Populate ships table when nav moves to the table
+    if (page == "shipsView") {
+        refreshShips();
+    }
     $('.container > div').hide();
     $('#'+page).show();
 }
