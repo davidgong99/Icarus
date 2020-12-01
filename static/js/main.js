@@ -70,7 +70,7 @@ $(document).ready(function(){
 
     $(document).on('click', '#delete-ship-button', function() {
         // Grab inputs
-        var deleteID = $('#shipsDelete input[name=deleteID]').val();
+        var deleteID = $('#shipsDelete input[name=spaceshipID]').val();
 
         // Store into payload object
         var payload = {

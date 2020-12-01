@@ -45,11 +45,64 @@
         <h2>Delete Spaceship</h2>
         <div class="alert alert-danger" id="delete-ship-error" style="visibility: hidden"></div>
         <div class="form-group">
-            <label for="deleteID">Spaceship ID</label>
-            <input type="text" name="deleteID" class="form-control" id="deleteID">
+            <label for="spaceshipID">Spaceship ID</label>
+            <input type="text" name="spaceshipID" class="form-control" id="spaceshipID">
         </div>
         <br>
         <button class="btn btn-primary" id="delete-ship-button">Delete spaceship</button>
+    </div>
+
+
+
+
+    <div id="locationsView" class="table-responsive">
+        <h2>View locations</h2>
+        <div class="alert alert-success" id="view-location-success" style="visibility: hidden"></div>
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>City</th>
+                    <th>Name</th>
+                    <th>Planet name</th>
+                    <th>Capacity</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    <div id="locationsAdd">
+        <h2>Add location</h2>
+        <div class="alert alert-danger" id="add-location-error" style="visibility: hidden"></div>
+        <div class="form-group">
+            <label for="city">City</label>
+            <input type="text" name="city" class="form-control" id="city">
+        </div>
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" name="name" class="form-control" id="name">
+        </div>
+        <div class="form-group">
+            <label for="planet">Planet name</label>
+            <input type="text" name="planet" class="form-control" id="planet">
+        </div>
+        <div class="form-group">
+            <label for="capacity">Capacity</label>
+            <input type="text" name="capacity" class="form-control" id="capacity">
+        </div>
+        <br>
+        <button class="btn btn-primary" id="add-ship-button">Add location</button>
+    </div>
+    <div id="locationsDelete">
+        <h2>Delete location</h2>
+        <div class="alert alert-danger" id="delete-location-error" style="visibility: hidden"></div>
+        <div class="form-group">
+            <label for="locationID">Location ID</label>
+            <input type="text" name="locationID" class="form-control" id="locationID">
+        </div>
+        <br>
+        <button class="btn btn-primary" id="delete-ship-button">Delete location</button>
     </div>
 </div>
 {% endblock %}
