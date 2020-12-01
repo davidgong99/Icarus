@@ -196,3 +196,22 @@ Example payload:
 | 422  | Spaceship is not operational    |
 | 422  | Location is at maximum capacity |
 
+---
+
+
+## Database design
+### Spaceship table
+* id (Primary key, INT)
+* name (VARCHAR)
+* model (VARCHAR)
+* location (Foreign key, INT) -> FK to `id` field in `Location` table
+* status (VARCHAR)
+
+### Location table
+* id (Primary key, INT)
+* city (VARCHAR)
+* name (VARCHAR)
+* planetName (VARCHAR)
+* currentCapacity (INT)
+* maxCapacity (INT)
+
